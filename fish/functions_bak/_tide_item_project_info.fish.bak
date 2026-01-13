@@ -1,0 +1,18 @@
+function _tide_item_project_info
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1
+        set -l git_root (git rev-parse --show-toplevel)
+        set -l project_name ""
+
+        if test -f "$git_root/package.json"
+            # FIX: We use 'string replace' directly to avoid the duplication bug
+            set project_name (grep -m1 '"name":' "$git_root/package.json" | string replace -r '.*"name":\s*"([^"]+)".*' '$1')
+        end
+
+        # Fallback to folder name if package.json didn't work
+        if test -z "$project_name"
+            set project_name (basename "$git_root")
+        end
+
+        _tide_print_item project_info "📦 $project_name"
+    end
+end
