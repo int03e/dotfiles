@@ -1,6 +1,6 @@
 # NixOS Dotfiles
 
-My personal NixOS configuration, managed with **Git** and **GNU Stow**.
+My personal NixOS configuration, managed with **GNU Stow**.
 
 ## 📦 Components
 - **Shell:** Fish + Starship
