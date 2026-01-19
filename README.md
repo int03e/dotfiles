@@ -2,6 +2,14 @@
 
 My personal NixOS configuration, managed with **Git** and **GNU Stow**.
 
+## 📦 Components
+- **Shell:** Fish + Starship
+- **Editor:** Neovim
+- **Window Manager:** Hyprland
+- **Terminal:** Kitty
+- **Bar:** Waybar
+- **Notification:** SwayNotificationCenter
+
 ## 📂 Repository Structure
 
 - **`nixos/`**: System-level configuration (bootloader, services, drivers). Symlinked to `/etc/nixos`.
