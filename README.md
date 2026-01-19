@@ -26,7 +26,7 @@ Open a terminal on your fresh NixOS installation and clone this repo.
 ```bash
 mkdir -p ~/projects
 cd ~/projects
-git clone https://github.com/YOUR_USERNAME/dotfiles.git
+git clone https://github.com/int03e/dotfiles.git
 cd dotfiles
 cp /etc/nixos/hardware-configuration.nix ~/projects/dotfiles/nixos/
 # Backup original config just in case
