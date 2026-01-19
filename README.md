@@ -20,9 +20,6 @@ My personal NixOS configuration, managed with **GNU Stow**.
 
 ## Installation (Fresh Machine)
 
-### 1. Clone the Repository
-Open a terminal on your fresh NixOS installation and clone this repo.
-
 ```bash
 mkdir -p ~/projects
 cd ~/projects
