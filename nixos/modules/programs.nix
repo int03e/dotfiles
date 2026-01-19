@@ -63,6 +63,8 @@
       tmuxPlugins.continuum
     ];
     extraConfig = ''
+      set -g base-index 1
+      setw -g pane-base-index 1
       set -g @continuum-restore 'on'
       set -g @continuum-save-interval '15'
       bind h select-pane -L
