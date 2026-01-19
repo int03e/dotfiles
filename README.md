@@ -1,7 +1,32 @@
-Installation (NixOS)
+# NixOS Dotfiles
 
-1. clone the repo to ~/dotfiles
-2. sudo stow --restow --target=/etc/nixos nixos 
-3. stow --target=$HOME user
+My personal NixOS configuration, managed with **Git** and **GNU Stow**.
 
-if you add a new config to your ~/.config folder and you want to sync it, run `./scripts/import-config`
+## 📂 Repository Structure
+
+- **`nixos/`**: System-level configuration (bootloader, services, drivers). Symlinked to `/etc/nixos`.
+- **`user/`**: User-level dotfiles (fish, neovim, starship, etc.). Symlinked to `$HOME`.
+- **`scripts/`**: Helper scripts for managing configuration.
+
+---
+
+## Installation (Fresh Machine)
+
+### 1. Clone the Repository
+Open a terminal on your fresh NixOS installation and clone this repo.
+
+```bash
+mkdir -p ~/projects
+cd ~/projects
+git clone https://github.com/YOUR_USERNAME/dotfiles.git
+cd dotfiles
+cp /etc/nixos/hardware-configuration.nix ~/projects/dotfiles/nixos/
+# Backup original config just in case
+sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.bak
+
+sudo nix-shell -p stow --run "stow --restow --target=/etc/nixos nixos"
+mkdir -p ~/.config
+
+nix-shell -p stow --run "stow --target=$HOME user"
+
+sudo nixos-rebuild switch
