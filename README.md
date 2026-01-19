@@ -1,7 +1,7 @@
-Installation:
+Installation (NixOS)
 
 1. clone the repo to ~/dotfiles
-2. sudo apt install stow
-3. run "stow" in the project's directory
+2. sudo stow --restow --target=/etc/nixos nixos 
+3. stow --target=$HOME user
 
-if you want to add more files - copy them from ~/.config to <project-dir>/.config and run "stow --adopt ."
+if you add a new config to your ~/.config folder and you want to sync it, run `./scripts/import-config`

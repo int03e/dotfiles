@@ -1,0 +1,47 @@
+{ pkgs, ... }:
+
+{
+  networking.hostName = "nixos";
+  networking.networkmanager.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+  services.power-profiles-daemon.enable = false;
+
+  virtualisation.docker.enable = true;
+
+  nix.gc = {
+    automatic = true;
+    dates = "*-*-01,15 03:15";
+    options = "--delete-older-than 14d";
+  };
+  nix.settings.auto-optimise-store = true;
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "weekly";
+    persistent = true;
+  };
+
+  systemd.services.nixos-upgrade = {
+    postStop = ''
+      USER_NAME="int03e"
+      USER_ID=$(${pkgs.coreutils}/bin/id -u $USER_NAME)
+      NOTIFY_CMD="${pkgs.libnotify}/bin/notify-send"
+      SUDO="/run/wrappers/bin/sudo"
+
+      if [ "$SERVICE_RESULT" = "success" ]; then
+        $SUDO -u $USER_NAME \
+          DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
+          DISPLAY=:0 \
+          $NOTIFY_CMD -u normal "System Update Successful" "All apps and system packages are now up to date."
+      else
+        $SUDO -u $USER_NAME \
+          DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
+          DISPLAY=:0 \
+          $NOTIFY_CMD -u critical "System Update Failed" "Weekly upgrade encountered an error. Check 'journalctl -u nixos-upgrade.service'."
+      fi
+    '';
+  };
+}
