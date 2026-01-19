@@ -14,6 +14,7 @@
     set fish_greeting
     abbr -a nr 'sudo nixos-rebuild switch'
     abbr -a nt 'sudo nixos-rebuild test'
+    abbr -a gc3 'sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
     ${pkgs.starship}/bin/starship init fish | source
   '';
 
