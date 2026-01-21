@@ -1,10 +1,15 @@
 { pkgs, ... }:
 
 {
-  boot.loader.systemd-boot = {
+  boot.loader.grub = {
     enable = true;
-    consoleMode = "1";
+    device = "nodev"; # "nodev" is required for UEFI setups
+    efiSupport = true;
+
+    # 3. Enable OS Prober to find Tuxedo OS on the other SSD
+    useOSProber = true;
   };
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
