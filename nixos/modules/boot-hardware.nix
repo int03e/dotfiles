@@ -7,7 +7,6 @@
       device = "nodev"; # "nodev" is required for UEFI setups
       efiSupport = true;
 
-      # 3. Enable OS Prober to find Tuxedo OS on the other SSD
       useOSProber = true;
     };
 

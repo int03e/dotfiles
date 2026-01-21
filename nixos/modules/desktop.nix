@@ -1,30 +1,33 @@
 { pkgs, ... }:
 
 {
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services = {
+    xserver = {
+      enable = true;
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      desktopManager.gnome.extraGSettingsOverrides = ''
+        [org/gnome/desktop/peripherals/touchpad]
+        natural-scroll=true
+      '';
+    };
 
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org/gnome/desktop/peripherals/touchpad]
-    natural-scroll=true
-  '';
+    logind.lidSwitch = "ignore";
 
-  services.logind.lidSwitch = "ignore";
+    libinput = {
+      enable = true;
+      touchpad.naturalScrolling = true;
+    };
 
-  services.libinput = {
-    enable = true;
-    touchpad.naturalScrolling = true;
-  };
-
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
   };
 
   fonts.packages = with pkgs; [
