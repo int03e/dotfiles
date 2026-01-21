@@ -1,26 +1,28 @@
 { pkgs, ... }:
 
 {
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev"; # "nodev" is required for UEFI setups
-    efiSupport = true;
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "nodev"; # "nodev" is required for UEFI setups
+      efiSupport = true;
 
-    # 3. Enable OS Prober to find Tuxedo OS on the other SSD
-    useOSProber = true;
+      # 3. Enable OS Prober to find Tuxedo OS on the other SSD
+      useOSProber = true;
+    };
+
+    loader.efi.canTouchEfiVariables = true;
+    kernelPackages = pkgs.linuxPackages_latest;
+
+    kernelModules = [ "tuxedo_keyboard" "tuxedo_io" ];
+    initrd.kernelModules = [ "amdgpu" ];
+
+    kernelParams = [
+      "acpi_backlight=native"
+      "amdgpu.backlight=0"
+      "video.use_native_backlight=1"
+    ];
   };
-
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  boot.kernelModules = [ "tuxedo_keyboard" "tuxedo_io" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
-
-  boot.kernelParams = [
-    "acpi_backlight=native"
-    "amdgpu.backlight=0"
-    "video.use_native_backlight=1"
-  ];
 
   hardware.tuxedo-drivers.enable = true;
   hardware.tuxedo-rs = {
