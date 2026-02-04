@@ -12,8 +12,6 @@
       '';
     };
 
-    logind.lidSwitch = "ignore";
-
     libinput = {
       enable = true;
       touchpad.naturalScrolling = true;

@@ -85,6 +85,7 @@
 
   environment.systemPackages = with pkgs; [
     wget
+    lazydocker
     gcc
     gnumake
     curl

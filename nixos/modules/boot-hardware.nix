@@ -21,6 +21,7 @@
       "acpi_backlight=native"
       "amdgpu.backlight=0"
       "video.use_native_backlight=1"
+      "resume_offset=239663104"
     ];
   };
 
@@ -37,4 +38,11 @@
     fsType = "btrfs";
     options = [ "defaults" "nofail" "compress=zstd" ];
   };
+
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 34 * 1024; # Size in MB (e.g., 34GB for 32GB RAM)
+  }];
+
+  boot.resumeDevice = "/dev/disk/by-uuid/2a88ba25-c2ba-48c0-988a-09009ea1efdd";
 }

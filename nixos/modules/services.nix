@@ -24,6 +24,15 @@
     persistent = true;
   };
 
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchExternalPower = "suspend"; # Stays in sleep if plugged in
+  };
+
+  systemd.sleep.extraConfig = ''
+    HibernateDelaySec=1h
+  '';
+
   systemd.services.tuxedo-battery-set = {
     description = "Set Tuxedo battery charging profile";
     after = [ "multi-user.target" "post-resume.target" ];
