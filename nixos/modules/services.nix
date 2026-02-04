@@ -5,7 +5,7 @@
   networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.powerOnBoot = false;
   services.blueman.enable = true;
   services.power-profiles-daemon.enable = false;
 
@@ -22,6 +22,19 @@
     enable = true;
     dates = "weekly";
     persistent = true;
+  };
+
+  systemd.services.tuxedo-battery-set = {
+    description = "Set Tuxedo battery charging profile";
+    after = [ "multi-user.target" "post-resume.target" ];
+    wantedBy = [ "multi-user.target" "post-resume.target" ];
+    script = ''
+      echo "stationary" > /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+    };
   };
 
   systemd.services.nixos-upgrade = {

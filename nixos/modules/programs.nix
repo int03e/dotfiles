@@ -15,6 +15,9 @@
     abbr -a nr 'sudo nixos-rebuild switch'
     abbr -a nt 'sudo nixos-rebuild test'
     abbr -a gc3 'sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
+    abbr -a bat-desk 'echo "stationary" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
+    abbr -a bat-full 'echo "high_capacity" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
+    abbr -a bat-status 'upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|energy-rate|percentage"'
     ${pkgs.starship}/bin/starship init fish | source
   '';
 
@@ -132,6 +135,7 @@
     transmission_4-gtk
     yazi
     bat
+    telegram-desktop
 
     (writeShellScriptBin "kbd-backlight-cycle"
       "  DEVICE=\"white:kbd_backlight\"\n  CURRENT=$(${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" get)\n  if [ \"$CURRENT\" -eq 0 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 1\n  elif [ \"$CURRENT\" -eq 1 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 2\n  elif [ \"$CURRENT\" -eq 2 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 3\n  elif [ \"$CURRENT\" -eq 3 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 4\n  else\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 0\n  fi\n")

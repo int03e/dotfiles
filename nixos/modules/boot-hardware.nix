@@ -14,6 +14,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
 
     kernelModules = [ "tuxedo_keyboard" "tuxedo_io" ];
+    blacklistedKernelModules = [ "asus_wmi" "asus_nb_wmi" ];
     initrd.kernelModules = [ "amdgpu" ];
 
     kernelParams = [
