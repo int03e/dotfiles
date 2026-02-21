@@ -29,14 +29,25 @@
     lidSwitchExternalPower = "suspend"; # Stays in sleep if plugged in
   };
 
+  services.udev.packages = [ pkgs.via ];
+
   systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1h
+    AllowSuspend=yes
+    AllowHibernation=yes
+    AllowSuspendThenHibernate=yes
+    HibernateDelaySec=30m
   '';
 
   systemd.services.tuxedo-battery-set = {
     description = "Set Tuxedo battery charging profile";
-    after = [ "multi-user.target" "post-resume.target" ];
-    wantedBy = [ "multi-user.target" "post-resume.target" ];
+    after = [
+      "multi-user.target"
+      "post-resume.target"
+    ];
+    wantedBy = [
+      "multi-user.target"
+      "post-resume.target"
+    ];
     script = ''
       echo "stationary" > /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile
     '';
