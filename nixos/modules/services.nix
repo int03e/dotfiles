@@ -17,8 +17,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
-    dates = "*-*-01,15 03:15";
-    options = "--delete-older-than 14d";
+    dates = "weekly";
+    options = "--delete-older-than +3";
   };
   nix.settings.auto-optimise-store = true;
 
@@ -27,6 +27,7 @@
     dates = "weekly";
     persistent = true;
     flake = "/home/int03e/projects/dotfiles/nixos#nixos";
+    flags = [ "--update-input" "nixpkgs" "--update-input" "nixvim" ];
   };
 
   services.logind = {
