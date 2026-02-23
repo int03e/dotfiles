@@ -11,6 +11,10 @@
 
   virtualisation.docker.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "25.11";
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.gc = {
     automatic = true;
     dates = "*-*-01,15 03:15";
@@ -22,6 +26,7 @@
     enable = true;
     dates = "weekly";
     persistent = true;
+    flake = "/home/int03e/projects/dotfiles/nixos#nixos";
   };
 
   services.logind = {

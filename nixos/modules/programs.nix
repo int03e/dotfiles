@@ -1,10 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
-  nixvim = import (
-    builtins.fetchTarball "https://github.com/nix-community/nixvim/archive/master.tar.gz"
-  );
-  nixvimPkg = nixvim.legacyPackages.${pkgs.system}.makeNixvim {
+  nixvimPkg = inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     colorschemes.catppuccin.enable = true;
 
     opts = {
@@ -80,6 +77,12 @@ let
         key = "<leader>gg";
         action = "<cmd>lua Snacks.lazygit.open()<cr>";
         options.desc = "Lazygit (Snacks)";
+      }
+      {
+        mode = "n";
+        key = "<leader>td";
+        action = "<cmd>Dooing<cr>";
+        options.desc = "Todo List (Dooing)";
       }
       {
         mode = "n";
@@ -235,6 +238,22 @@ let
       };
     };
 
+    extraPlugins = [
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "dooing";
+        src = pkgs.fetchFromGitHub {
+          owner = "atiladefreitas";
+          repo = "dooing";
+          rev = "master";
+          hash = "sha256-0WXYtNpjl5U7waO6SyMSx0H7SKbKKWrnmMFxSGRVIAk=";
+        };
+      })
+    ];
+
+    extraConfigLua = ''
+      require("dooing").setup({})
+    '';
+
     autoCmd = [
       {
         event = [ "BufWritePre" ];
@@ -275,8 +294,8 @@ in
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
     set fish_greeting
-    abbr -a nr 'sudo nixos-rebuild switch'
-    abbr -a nt 'sudo nixos-rebuild test'
+    abbr -a nr 'sudo nixos-rebuild switch --flake ~/projects/dotfiles/nixos#nixos'
+    abbr -a nt 'sudo nixos-rebuild test --flake ~/projects/dotfiles/nixos#nixos'
     abbr -a gc3 'sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
     abbr -a bat-desk 'echo "stationary" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
     abbr -a bat-full 'echo "high_capacity" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
@@ -423,6 +442,6 @@ in
     telegram-desktop
     lua-language-server
 
-    (writeShellScriptBin "kbd-backlight-cycle" "  DEVICE=\"white:kbd_backlight\"\n  CURRENT=$(${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" get)\n  if [ \"$CURRENT\" -eq 0 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 1\n  elif [ \"$CURRENT\" -eq 1 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 2\n  elif [ \"$CURRENT\" -eq 2 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 3\n  elif [ \"$CURRENT\" -eq 4 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 4\n  else\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 0\n  fi\n")
+    (writeShellScriptBin "kbd-backlight-cycle" "  DEVICE=\"white:kbd_backlight\"\n  CURRENT=$(${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" get)\n  if [ \"$CURRENT\" -eq 0 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 1\n  elif [ \"$CURRENT\" -eq 1 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 2\n  elif [ \"$CURRENT\" -eq 2 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 3\n  elif [ \"$CURRENT\" -eq 3 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 4\n  else\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 0\n  fi\n")
   ];
 }
