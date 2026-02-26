@@ -6,7 +6,7 @@
 }:
 
 let
-  nixvimPkg = import ./nixvim.nix { inherit pkgs inputs; };
+  nixvimPkg = import ./programs/nixvim.nix { inherit pkgs inputs; };
 in
 {
   environment.variables = {
