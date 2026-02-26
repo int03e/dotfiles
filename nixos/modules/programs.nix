@@ -89,12 +89,10 @@ in
       set-option -g prefix C-a
       bind-key C-a send-prefix
       bind r source-file /etc/tmux.conf \; display "System Tmux Config Reloaded!"
-
-      # Resize panes with Prefix + Shift + Arrow Keys (repeatable)
-      bind -r S-Up    resize-pane -U 5
-      bind -r S-Down  resize-pane -D 5
-      bind -r S-Left  resize-pane -L 5
-      bind -r S-Right resize-pane -R 5
+      bind -r H resize-pane -L 5
+      bind -r J resize-pane -D 5
+      bind -r K resize-pane -U 5
+      bind -r L resize-pane -R 5
     '';
   };
 
