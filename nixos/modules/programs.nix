@@ -9,6 +9,10 @@ let
   nixvimPkg = import ./programs/nixvim.nix { inherit pkgs inputs; };
 in
 {
+  imports = [
+    ./programs/tmux.nix
+  ];
+
   environment.variables = {
     DIRENV_LOG_FORMAT = "";
     NIXPKGS_ALLOW_UNFREE = "1";
@@ -61,39 +65,6 @@ in
       "browser.sessionstore.resume_from_crash" = true;
       "browser.tabs.restore_on_demand" = true;
     };
-  };
-
-  programs.tmux = {
-    enable = true;
-    clock24 = true;
-    plugins = with pkgs; [
-      tmuxPlugins.sensible
-      tmuxPlugins.resurrect
-      tmuxPlugins.continuum
-    ];
-    extraConfig = ''
-      set -g base-index 1
-      setw -g pane-base-index 1
-      set -g @continuum-restore 'on'
-      set -g @continuum-save-interval '15'
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
-      set -g mouse on
-      set -g status-style bg=colour65,fg=white
-      set-window-option -g window-status-current-style bg=colour108,fg=black,bold
-      set -g status-right 'Bat: #(acpi | grep -o "[0-9]*%") | %H:%M '
-      set -g status-right-length 50
-      unbind C-b
-      set-option -g prefix C-a
-      bind-key C-a send-prefix
-      bind r source-file /etc/tmux.conf \; display "System Tmux Config Reloaded!"
-      bind -r H resize-pane -L 5
-      bind -r J resize-pane -D 5
-      bind -r K resize-pane -U 5
-      bind -r L resize-pane -R 5
-    '';
   };
 
   programs.steam = {
@@ -178,6 +149,18 @@ in
     lua-language-server
     mpv
 
-    # (writeShellScriptBin "kbd-backlight-cycle" "  DEVICE=\"white:kbd_backlight\"\n  CURRENT=$(${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" get)\n  if[ \"$CURRENT\" -eq 0 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 1\n  elif [ \"$CURRENT\" -eq 1 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 2\n  elif [ \"$CURRENT\" -eq 2 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 3\n  elif [ \"$CURRENT\" -eq 3 ]; then\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 4\n  else\n      ${pkgs.brightnessctl}/bin/brightnessctl --device=\"$DEVICE\" set 0\n  fi\n")
+    (writeShellScriptBin "kbd-backlight-cycle" ''
+      DEVICE="white:kbd_backlight"
+      BCTL="${pkgs.brightnessctl}/bin/brightnessctl"
+      CURRENT=$($BCTL --device="$DEVICE" get)
+
+      case "$CURRENT" in
+        0) $BCTL --device="$DEVICE" set 1 ;;
+        1) $BCTL --device="$DEVICE" set 2 ;;
+        2) $BCTL --device="$DEVICE" set 3 ;;
+        3) $BCTL --device="$DEVICE" set 4 ;;
+        *) $BCTL --device="$DEVICE" set 0 ;;
+      esac
+    '')
   ];
 }

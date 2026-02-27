@@ -196,7 +196,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     lsp = {
       enable = true;
       servers = {
-        nil_ls.enable = true;
         nixd = {
           enable = true;
           settings = {
@@ -252,30 +251,4 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
   extraConfigLua = ''
     require("dooing").setup({})
   '';
-
-  autoCmd = [
-    {
-      event = [ "BufWritePre" ];
-      pattern = [
-        "*.ts"
-        "*.tsx"
-        "*.js"
-        "*.jsx"
-      ];
-      callback = {
-        __raw = ''
-          function()
-            vim.lsp.buf.code_action({
-              context = { only = { "source.addMissingImports.ts" }, diagnostics = {} },
-              apply = true,
-            })
-            vim.lsp.buf.code_action({
-              context = { only = { "source.organizeImports.ts" }, diagnostics = {} },
-              apply = true,
-            })
-          end
-        '';
-      };
-    }
-  ];
 }
