@@ -86,6 +86,7 @@ in
       ln -s ${nixvimPkg}/bin/nvim $out/bin/vi
     '')
     wl-clipboard
+    inputs.noctalia.packages.${pkgs.system}.default
     protontricks
     via
     socat
@@ -102,7 +103,6 @@ in
     fd
     unzip
     fzf
-    wlogout
     lazygit
     vlc
     slack
@@ -116,13 +116,7 @@ in
     statix
     deadnix
     direnv
-    waybar
     libnotify
-    networkmanagerapplet
-    swaynotificationcenter
-    wofi
-    swaybg
-    blueman
     bibata-cursors
     adwaita-icon-theme
     pavucontrol

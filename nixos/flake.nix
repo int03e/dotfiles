@@ -8,20 +8,33 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
 
-  outputs = { self, nixpkgs, nixvim, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./hardware-configuration.nix
-        ./modules/boot-hardware.nix
-        ./modules/desktop.nix
-        ./modules/services.nix
-        ./modules/programs.nix
-        ./modules/user.nix
-      ];
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixvim,
+      noctalia,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hardware-configuration.nix
+          ./modules/boot-hardware.nix
+          ./modules/desktop.nix
+          ./modules/services.nix
+          ./modules/programs.nix
+          ./modules/user.nix
+        ];
+      };
+    };
 }
