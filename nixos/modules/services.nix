@@ -14,7 +14,10 @@
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -27,7 +30,12 @@
     dates = "weekly";
     persistent = true;
     flake = "/home/int03e/projects/dotfiles/nixos#nixos";
-    flags = [ "--update-input" "nixpkgs" "--update-input" "nixvim" ];
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--update-input"
+      "nixvim"
+    ];
   };
 
   services.logind = {
@@ -43,6 +51,10 @@
     AllowSuspendThenHibernate=yes
     HibernateDelaySec=30m
   '';
+
+  services.gnome.evolution-data-server.enable = true;
+  services.gnome.gnome-online-accounts.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   systemd.services.tuxedo-battery-set = {
     description = "Set Tuxedo battery charging profile";

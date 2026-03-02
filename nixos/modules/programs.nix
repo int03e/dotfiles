@@ -25,8 +25,8 @@ in
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
     set fish_greeting
-    abbr -a nr 'sudo nixos-rebuild switch --flake ~/projects/dotfiles/nixos#nixos'
-    abbr -a nt 'sudo nixos-rebuild test --flake ~/projects/dotfiles/nixos#nixos'
+    abbr -a nr 'sudo nixos-rebuild switch --flake "path:/home/int03e/projects/dotfiles/nixos#nixos"'
+    abbr -a nt 'sudo nixos-rebuild test --flake "path:/home/int03e/projects/dotfiles/nixos#nixos"' 
     abbr -a gc3 'sudo nix-env -p /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage'
     abbr -a bat-desk 'echo "stationary" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
     abbr -a bat-full 'echo "high_capacity" | sudo tee /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile'
@@ -35,6 +35,7 @@ in
   '';
 
   programs.starship.enable = true;
+  programs.dconf.enable = true;
 
   programs.direnv = {
     enable = true;
@@ -74,6 +75,15 @@ in
     ];
   };
 
+  programs.git = {
+    enable = true;
+    config = {
+      safe = {
+        directory = "/home/int03e/projects/dotfiles";
+      };
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     nixvimPkg
     (runCommand "nv-alias" { } ''
@@ -98,7 +108,6 @@ in
     gcc
     gnumake
     curl
-    git
     ripgrep
     fd
     unzip
