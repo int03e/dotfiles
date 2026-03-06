@@ -23,6 +23,22 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
   globals.mapleader = " ";
 
+  # NEW: Briefly highlight text when you copy (yank) it
+  autoGroups = {
+    highlight_yank = {
+      clear = true;
+    };
+  };
+  autoCmd = [
+    {
+      event = "TextYankPost";
+      group = "highlight_yank";
+      callback = {
+        __raw = "function() vim.highlight.on_yank() end";
+      };
+    }
+  ];
+
   keymaps = [
     {
       mode = "n";
@@ -36,6 +52,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>Neotree toggle<cr>";
       options.desc = "Explorer (Neo-tree)";
     }
+
+    # --- LSP Keymaps ---
     {
       mode = "n";
       key = "gd";
@@ -54,12 +72,42 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua vim.lsp.buf.code_action()<cr>";
       options.desc = "Code Action";
     }
+    # NEW: Hover Documentation
+    {
+      mode = "n";
+      key = "K";
+      action = "<cmd>lua vim.lsp.buf.hover()<cr>";
+      options.desc = "Hover Documentation";
+    }
+    # NEW: Rename Symbol
+    {
+      mode = "n";
+      key = "<leader>cr";
+      action = "<cmd>lua vim.lsp.buf.rename()<cr>";
+      options.desc = "Rename Symbol";
+    }
+    # NEW: Navigate Diagnostics (Errors/Warnings)
+    {
+      mode = "n";
+      key = "[d";
+      action = "<cmd>lua vim.diagnostic.goto_prev()<cr>";
+      options.desc = "Previous Diagnostic";
+    }
+    {
+      mode = "n";
+      key = "]d";
+      action = "<cmd>lua vim.diagnostic.goto_next()<cr>";
+      options.desc = "Next Diagnostic";
+    }
+
     {
       mode = "n";
       key = "<leader>cf";
       action = ''<cmd>lua require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 500 })<cr>'';
       options.desc = "Format";
     }
+
+    # --- Search & Find ---
     {
       mode = "n";
       key = "<leader>sr";
@@ -78,6 +126,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua Snacks.picker.files()<cr>";
       options.desc = "Find Files (Snacks)";
     }
+
+    # --- Tools ---
     {
       mode = "n";
       key = "<leader>gg";
@@ -90,6 +140,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>Dooing<cr>";
       options.desc = "Todo List (Dooing)";
     }
+
+    # --- Buffers ---
     {
       mode = "n";
       key = "<S-h>";
@@ -127,7 +179,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       options.desc = "Delete Other Buffers";
     }
 
-    # Git Hunk Keymaps
+    # --- Git Hunk Keymaps ---
     {
       mode = "n";
       key = "<leader>ghp";
@@ -220,7 +272,10 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
     mini = {
       enable = true;
-      modules.ai = { };
+      modules = {
+        ai = { };
+        pairs = { }; # NEW: Automatically closes ([ { " '
+      };
     };
 
     conform-nvim = {
