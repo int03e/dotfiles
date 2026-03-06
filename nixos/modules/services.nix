@@ -31,10 +31,8 @@
     persistent = true;
     flake = "/home/int03e/projects/dotfiles/nixos#nixos";
     flags = [
-      "--update-input"
-      "nixpkgs"
-      "--update-input"
-      "nixvim"
+      "-L"
+      "--recreate-lock-file"
     ];
   };
 
