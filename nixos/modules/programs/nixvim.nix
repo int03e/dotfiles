@@ -127,18 +127,24 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       options.desc = "Delete Other Buffers";
     }
 
-    # Git Hunk Keymaps (Moved to <leader>h to avoid Which-Key conflicts and accidental pastes)
+    # Git Hunk Keymaps
     {
       mode = "n";
-      key = "<leader>hp";
+      key = "<leader>ghp";
       action = "<cmd>Gitsigns preview_hunk<cr>";
       options.desc = "Preview Git Hunk (Diff)";
     }
     {
       mode = "n";
-      key = "<leader>hd";
+      key = "<leader>ghd";
       action = "<cmd>Gitsigns toggle_deleted<cr>";
       options.desc = "Toggle Git Deleted Lines";
+    }
+    {
+      mode = "n";
+      key = "<leader>ghu";
+      action = "<cmd>Gitsigns reset_hunk<cr>";
+      options.desc = "Undo Git Hunk (Reset)";
     }
   ];
 
@@ -150,7 +156,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     oil.enable = true;
     grug-far.enable = true;
 
-    # Properly grouping Which-Key so everything is neatly visible
     which-key = {
       enable = true;
       settings = {
@@ -168,7 +173,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
             group = "Git/Find";
           }
           {
-            __unkeyed-1 = "<leader>h";
+            __unkeyed-1 = "<leader>gh";
             group = "Git Hunk";
           }
           {
