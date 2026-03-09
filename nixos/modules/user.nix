@@ -4,7 +4,12 @@
   users.users.int03e = {
     isNormalUser = true;
     description = "int03e";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirtd"
+    ];
     shell = pkgs.fish;
   };
 

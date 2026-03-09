@@ -22,6 +22,9 @@ in
   programs.hyprland.enable = true;
   programs.hyprlock.enable = true;
 
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   programs.fish.enable = true;
   programs.fish.interactiveShellInit = ''
     set fish_greeting
