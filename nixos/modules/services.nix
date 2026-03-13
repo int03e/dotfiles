@@ -43,13 +43,6 @@
 
   services.udev.packages = [ pkgs.via ];
 
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=yes
-    AllowHibernation=yes
-    AllowSuspendThenHibernate=yes
-    HibernateDelaySec=30m
-  '';
-
   services.gnome.evolution-data-server.enable = true;
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;

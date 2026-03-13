@@ -154,6 +154,7 @@ in
     telegram-desktop
     lua-language-server
     mpv
+    opencode
 
     (writeShellScriptBin "kbd-backlight-cycle" ''
       DEVICE="white:kbd_backlight"

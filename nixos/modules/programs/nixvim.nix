@@ -23,7 +23,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
   globals.mapleader = " ";
 
-  # NEW: Briefly highlight text when you copy (yank) it
+  # Briefly highlight text when you copy (yank) it
   autoGroups = {
     highlight_yank = {
       clear = true;
@@ -72,21 +72,18 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua vim.lsp.buf.code_action()<cr>";
       options.desc = "Code Action";
     }
-    # NEW: Hover Documentation
     {
       mode = "n";
       key = "K";
       action = "<cmd>lua vim.lsp.buf.hover()<cr>";
       options.desc = "Hover Documentation";
     }
-    # NEW: Rename Symbol
     {
       mode = "n";
       key = "<leader>cr";
       action = "<cmd>lua vim.lsp.buf.rename()<cr>";
       options.desc = "Rename Symbol";
     }
-    # NEW: Navigate Diagnostics (Errors/Warnings)
     {
       mode = "n";
       key = "[d";
@@ -198,6 +195,43 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>Gitsigns reset_hunk<cr>";
       options.desc = "Undo Git Hunk (Reset)";
     }
+
+    # NEW: Flash Keymaps
+    {
+      mode = [
+        "n"
+        "x"
+        "o"
+      ];
+      key = "<leader>jj";
+      action = "<cmd>lua require('flash').jump()<cr>";
+      options.desc = "Flash Jump";
+    }
+    {
+      mode = [
+        "n"
+        "x"
+        "o"
+      ];
+      key = "<leader>jt";
+      action = "<cmd>lua require('flash').treesitter()<cr>";
+      options.desc = "Flash Treesitter";
+    }
+    {
+      mode = "o";
+      key = "<leader>jr";
+      action = "<cmd>lua require('flash').remote()<cr>";
+      options.desc = "Remote Flash";
+    }
+    {
+      mode = [
+        "o"
+        "x"
+      ];
+      key = "<leader>js";
+      action = "<cmd>lua require('flash').treesitter_search()<cr>";
+      options.desc = "Treesitter Search";
+    }
   ];
 
   plugins = {
@@ -207,6 +241,9 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     neo-tree.enable = true;
     oil.enable = true;
     grug-far.enable = true;
+
+    # NEW: Enable Flash.nvim
+    flash.enable = true;
 
     which-key = {
       enable = true;
@@ -227,6 +264,11 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
           {
             __unkeyed-1 = "<leader>gh";
             group = "Git Hunk";
+          }
+          {
+            # NEW: Register <leader>j group in which-key
+            __unkeyed-1 = "<leader>j";
+            group = "Jump/Flash";
           }
           {
             __unkeyed-1 = "<leader>s";
@@ -274,7 +316,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       enable = true;
       modules = {
         ai = { };
-        pairs = { }; # NEW: Automatically closes ([ { " '
+        pairs = { };
       };
     };
 
@@ -311,7 +353,13 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       };
     };
 
-    treesitter.enable = true;
+    treesitter = {
+      enable = true;
+      settings = {
+        highlight.enable = true;
+        ensure_installed = "all";
+      };
+    };
 
     lsp = {
       enable = true;

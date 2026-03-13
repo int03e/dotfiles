@@ -75,12 +75,12 @@
     lidSwitchExternalPower = lib.mkForce "suspend";
   };
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=1h
-    AllowSuspend=yes
-    AllowHibernation=yes
-    AllowSuspendThenHibernate=yes
-  '';
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "1h";
+    AllowSuspend = "yes";
+    AllowHibernation = "yes";
+    AllowSuspendThenHibernate = "yes";
+  };
 
   # --- 5. AUTOMATIC BATTERY LIMIT ---
   systemd.services.tuxedo-battery-set = {
