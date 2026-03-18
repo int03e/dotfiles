@@ -13,6 +13,11 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -21,6 +26,7 @@
       nixpkgs,
       nixvim,
       noctalia,
+      nix-index-database,
       ...
     }@inputs:
     {
@@ -34,6 +40,11 @@
           ./modules/services.nix
           ./modules/programs.nix
           ./modules/user.nix
+
+          nix-index-database.nixosModules.nix-index
+          {
+            programs.nix-index-database.comma.enable = true;
+          }
         ];
       };
     };

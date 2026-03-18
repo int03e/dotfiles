@@ -106,10 +106,22 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
     # --- Search & Find ---
     {
-      mode = "n";
+      mode = [
+        "n"
+        "v"
+      ];
       key = "<leader>sr";
       action = "<cmd>GrugFar<cr>";
       options.desc = "Search and Replace";
+    }
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<leader>sf";
+      action = "<cmd>lua require('grug-far').open({ prefills = { paths = vim.fn.expand('%') } })<CR>";
+      options.desc = "Search and Replace (Current File)";
     }
     {
       mode = "n";
