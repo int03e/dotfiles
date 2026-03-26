@@ -38,7 +38,7 @@
 
   services.logind = {
     lidSwitch = "suspend-then-hibernate";
-    lidSwitchExternalPower = "suspend"; # Stays in sleep if plugged in
+    lidSwitchExternalPower = "suspend";
   };
 
   services.udev.packages = [ pkgs.via ];
@@ -47,43 +47,24 @@
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  systemd.services.tuxedo-battery-set = {
-    description = "Set Tuxedo battery charging profile";
-    after = [
-      "multi-user.target"
-      "post-resume.target"
-    ];
-    wantedBy = [
-      "multi-user.target"
-      "post-resume.target"
-    ];
-    script = ''
-      echo "stationary" > /sys/devices/platform/tuxedo_keyboard/charging_profile/charging_profile
-    '';
+  systemd.services.nixos-upgrade = {
+    onSuccess = [ "nixos-upgrade-notify-success.service" ];
+    onFailure = [ "nixos-upgrade-notify-failure.service" ];
+  };
+
+  systemd.services.nixos-upgrade-notify-success = {
+    script = "${pkgs.libnotify}/bin/notify-send -u normal 'System Update Successful' 'All apps and system packages are now up to date.'";
     serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
+      User = "int03e";
+      Environment = "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus";
     };
   };
 
-  systemd.services.nixos-upgrade = {
-    postStop = ''
-      USER_NAME="int03e"
-      USER_ID=$(${pkgs.coreutils}/bin/id -u $USER_NAME)
-      NOTIFY_CMD="${pkgs.libnotify}/bin/notify-send"
-      SUDO="/run/wrappers/bin/sudo"
-
-      if [ "$SERVICE_RESULT" = "success" ]; then
-        $SUDO -u $USER_NAME \
-          DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
-          DISPLAY=:0 \
-          $NOTIFY_CMD -u normal "System Update Successful" "All apps and system packages are now up to date."
-      else
-        $SUDO -u $USER_NAME \
-          DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus \
-          DISPLAY=:0 \
-          $NOTIFY_CMD -u critical "System Update Failed" "Weekly upgrade encountered an error. Check 'journalctl -u nixos-upgrade.service'."
-      fi
-    '';
+  systemd.services.nixos-upgrade-notify-failure = {
+    script = "${pkgs.libnotify}/bin/notify-send -u critical 'System Update Failed' 'Weekly upgrade encountered an error. Check journalctl -u nixos-upgrade.service.'";
+    serviceConfig = {
+      User = "int03e";
+      Environment = "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus";
+    };
   };
 }
