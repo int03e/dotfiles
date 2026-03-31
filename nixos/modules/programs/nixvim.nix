@@ -126,7 +126,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     {
       mode = "n";
       key = "<leader>sg";
-      action = "<cmd>lua Snacks.picker.grep()<cr>";
+      action = "<cmd>lua Snacks.picker.grep({ args = { \"-F\" } })<cr>";
       options.desc = "Grep (Snacks)";
     }
     {
