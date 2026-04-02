@@ -47,6 +47,14 @@
   services.gnome.gnome-online-accounts.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+
   systemd.services.nixos-upgrade = {
     onSuccess = [ "nixos-upgrade-notify-success.service" ];
     onFailure = [ "nixos-upgrade-notify-failure.service" ];
