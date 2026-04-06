@@ -431,7 +431,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         owner = "atiladefreitas";
         repo = "dooing";
         rev = "master";
-        hash = "sha256-EcmhYaaVrsfddVkmtd8tSfHpoP1htrOr/ReLznGIWco=";
+        hash = "sha256-cKGRCgdgETE9RyNGkDWnNe5m31s9vB6rGlI8+DhuSeg=";
       };
     })
   ];
