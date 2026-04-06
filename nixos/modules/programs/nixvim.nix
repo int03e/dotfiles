@@ -350,13 +350,13 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         formatters_by_ft = {
           lua = [ "stylua" ];
           nix = [ "nixfmt" ];
-          javascript = [ "prettier" ];
-          typescript = [ "prettier" ];
-          javascriptreact = [ "prettier" ];
-          typescriptreact = [ "prettier" ];
-          json = [ "prettier" ];
-          html = [ "prettier" ];
-          css = [ "prettier" ];
+          javascript = [ "prettierd" ];
+          typescript = [ "prettierd" ];
+          javascriptreact = [ "prettierd" ];
+          typescriptreact = [ "prettierd" ];
+          json = [ "prettierd" ];
+          html = [ "prettierd" ];
+          css = [ "prettierd" ];
         };
       };
     };
@@ -434,6 +434,14 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         hash = "sha256-EcmhYaaVrsfddVkmtd8tSfHpoP1htrOr/ReLznGIWco=";
       };
     })
+  ];
+
+  extraPackages = with pkgs; [
+    typescript-language-server
+    nixd
+    nixfmt-rfc-style
+    prettierd
+    stylua
   ];
 
   extraConfigLua = ''

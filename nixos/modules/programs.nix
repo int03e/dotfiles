@@ -142,9 +142,7 @@ in
     hypridle
     google-cloud-sdk
     google-cloud-sql-proxy
-    nodePackages.typescript-language-server
     vtsls
-    nodePackages.prettier
     stylua
     stow
     bc
