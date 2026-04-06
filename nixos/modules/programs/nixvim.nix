@@ -260,7 +260,17 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     oil.enable = true;
     grug-far.enable = true;
     flash.enable = true;
-    undotree.enable = true;
+
+    undotree = {
+      enable = true;
+      settings = {
+        focusOnToggle = true; # Automatically focus the tree
+        highlightChangedText = true;
+        windowLayout = 2; # 2 = Sidebar on the left
+        autoOpenDiff = true; # Auto-open the diff window
+        diffCommand = "diff"; # Ensure it uses the system diff
+      };
+    };
 
     which-key = {
       enable = true;
