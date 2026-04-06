@@ -430,7 +430,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       src = pkgs.fetchFromGitHub {
         owner = "atiladefreitas";
         repo = "dooing";
-        rev = "master";
+        rev = "4beaedd7195e6df39f8c2a5bbae1db7eb6d952d3";
         hash = "sha256-cKGRCgdgETE9RyNGkDWnNe5m31s9vB6rGlI8+DhuSeg=";
       };
     })
