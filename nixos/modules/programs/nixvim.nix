@@ -187,6 +187,12 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua Snacks.bufdelete.other()<cr>";
       options.desc = "Delete Other Buffers";
     }
+    {
+      mode = "n";
+      key = "<leader>cu";
+      action = "<cmd>UndotreeToggle<cr>";
+      options.desc = "Undotree";
+    }
 
     # --- Git Hunk Keymaps ---
     {
@@ -253,9 +259,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     neo-tree.enable = true;
     oil.enable = true;
     grug-far.enable = true;
-
-    # NEW: Enable Flash.nvim
     flash.enable = true;
+    undotree.enable = true;
 
     which-key = {
       enable = true;
@@ -278,7 +283,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
             group = "Git Hunk";
           }
           {
-            # NEW: Register <leader>j group in which-key
             __unkeyed-1 = "<leader>j";
             group = "Jump/Flash";
           }
@@ -289,6 +293,10 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
           {
             __unkeyed-1 = "<leader>t";
             group = "Todos";
+          }
+          {
+            __unkeyed-1 = "<leader>cu";
+            desc = "Toggle Undotree";
           }
         ];
       };
