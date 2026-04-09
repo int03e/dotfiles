@@ -5,8 +5,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
   clipboard = {
     providers = {
-      wl-copy.enable = true; # For Wayland
-      xclip.enable = true; # For X11
+      wl-copy.enable = true;
+      xclip.enable = true;
     };
   };
 
@@ -23,7 +23,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
   globals.mapleader = " ";
 
-  # Briefly highlight text when you copy (yank) it
   autoGroups = {
     highlight_yank = {
       clear = true;
@@ -48,12 +47,22 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     }
     {
       mode = "n";
+      key = "<leader>fo";
+      action = "<cmd>Oil<cr>";
+      options.desc = "Open Oil";
+    }
+    {
+      mode = "n";
+      key = "<leader>fy";
+      action = "<cmd>Yazi<cr>";
+      options.desc = "Open Yazi";
+    }
+    {
+      mode = "n";
       key = "<leader>e";
       action = "<cmd>Neotree toggle<cr>";
       options.desc = "Explorer (Neo-tree)";
     }
-
-    # --- LSP Keymaps ---
     {
       mode = "n";
       key = "gd";
@@ -96,15 +105,12 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua vim.diagnostic.goto_next()<cr>";
       options.desc = "Next Diagnostic";
     }
-
     {
       mode = "n";
       key = "<leader>cf";
       action = ''<cmd>lua require("conform").format({ lsp_fallback = true, async = false, timeout_ms = 500 })<cr>'';
       options.desc = "Format";
     }
-
-    # --- Search & Find ---
     {
       mode = [
         "n"
@@ -135,8 +141,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua Snacks.picker.files()<cr>";
       options.desc = "Find Files (Snacks)";
     }
-
-    # --- Tools ---
     {
       mode = "n";
       key = "<leader>gg";
@@ -149,8 +153,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>Dooing<cr>";
       options.desc = "Todo List (Dooing)";
     }
-
-    # --- Buffers ---
     {
       mode = "n";
       key = "<S-h>";
@@ -160,18 +162,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     {
       mode = "n";
       key = "<S-l>";
-      action = "<cmd>BufferLineCycleNext<cr>";
-      options.desc = "Next Buffer";
-    }
-    {
-      mode = "n";
-      key = "[b";
-      action = "<cmd>BufferLineCyclePrev<cr>";
-      options.desc = "Prev Buffer";
-    }
-    {
-      mode = "n";
-      key = "]b";
       action = "<cmd>BufferLineCycleNext<cr>";
       options.desc = "Next Buffer";
     }
@@ -193,28 +183,24 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>UndotreeToggle<cr>";
       options.desc = "Undotree";
     }
-
-    # --- Git Hunk Keymaps ---
     {
       mode = "n";
       key = "<leader>ghp";
       action = "<cmd>Gitsigns preview_hunk<cr>";
-      options.desc = "Preview Git Hunk (Diff)";
+      options.desc = "Preview Git Hunk";
     }
     {
       mode = "n";
       key = "<leader>ghd";
       action = "<cmd>Gitsigns toggle_deleted<cr>";
-      options.desc = "Toggle Git Deleted Lines";
+      options.desc = "Toggle Git Deleted";
     }
     {
       mode = "n";
       key = "<leader>ghu";
       action = "<cmd>Gitsigns reset_hunk<cr>";
-      options.desc = "Undo Git Hunk (Reset)";
+      options.desc = "Undo Git Hunk";
     }
-
-    # NEW: Flash Keymaps
     {
       mode = [
         "n"
@@ -225,31 +211,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       action = "<cmd>lua require('flash').jump()<cr>";
       options.desc = "Flash Jump";
     }
-    {
-      mode = [
-        "n"
-        "x"
-        "o"
-      ];
-      key = "<leader>jt";
-      action = "<cmd>lua require('flash').treesitter()<cr>";
-      options.desc = "Flash Treesitter";
-    }
-    {
-      mode = "o";
-      key = "<leader>jr";
-      action = "<cmd>lua require('flash').remote()<cr>";
-      options.desc = "Remote Flash";
-    }
-    {
-      mode = [
-        "o"
-        "x"
-      ];
-      key = "<leader>js";
-      action = "<cmd>lua require('flash').treesitter_search()<cr>";
-      options.desc = "Treesitter Search";
-    }
   ];
 
   plugins = {
@@ -258,17 +219,17 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     lualine.enable = true;
     neo-tree.enable = true;
     oil.enable = true;
+    yazi.enable = true;
     grug-far.enable = true;
     flash.enable = true;
 
     undotree = {
       enable = true;
       settings = {
-        focusOnToggle = true; # Automatically focus the tree
+        focusOnToggle = true;
         highlightChangedText = true;
-        windowLayout = 2; # 2 = Sidebar on the left
-        autoOpenDiff = true; # Auto-open the diff window
-        diffCommand = "diff"; # Ensure it uses the system diff
+        windowLayout = 2;
+        autoOpenDiff = true;
       };
     };
 
@@ -285,12 +246,12 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
             group = "Code";
           }
           {
-            __unkeyed-1 = "<leader>g";
-            group = "Git/Find";
+            __unkeyed-1 = "<leader>f";
+            group = "Files/Find";
           }
           {
-            __unkeyed-1 = "<leader>gh";
-            group = "Git Hunk";
+            __unkeyed-1 = "<leader>g";
+            group = "Git/Find";
           }
           {
             __unkeyed-1 = "<leader>j";
@@ -300,14 +261,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
             __unkeyed-1 = "<leader>s";
             group = "Search";
           }
-          {
-            __unkeyed-1 = "<leader>t";
-            group = "Todos";
-          }
-          {
-            __unkeyed-1 = "<leader>cu";
-            desc = "Toggle Undotree";
-          }
         ];
       };
     };
@@ -315,7 +268,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
     cmp = {
       enable = true;
       settings = {
-        autoEnableSources = true;
         sources = [
           { name = "nvim_lsp"; }
           { name = "path"; }
@@ -323,8 +275,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         ];
         mapping = {
           "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
         };
       };
     };
@@ -333,15 +283,8 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
       enable = true;
       settings = {
         current_line_blame = true;
-        current_line_blame_opts = {
-          virt_text = true;
-          virt_text_pos = "eol";
-          delay = 500;
-        };
-        word_diff = true;
       };
     };
-
     mini = {
       enable = true;
       modules = {
@@ -349,7 +292,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         pairs = { };
       };
     };
-
     conform-nvim = {
       enable = true;
       settings = {
@@ -357,32 +299,16 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
           lsp_fallback = true;
           timeout_ms = 1000;
         };
-        formatters_by_ft = {
-          lua = [ "stylua" ];
-          nix = [ "nixfmt" ];
-          javascript = [ "prettierd" ];
-          typescript = [ "prettierd" ];
-          javascriptreact = [ "prettierd" ];
-          typescriptreact = [ "prettierd" ];
-          json = [ "prettierd" ];
-          html = [ "prettierd" ];
-          css = [ "prettierd" ];
-        };
       };
     };
-
     snacks = {
       enable = true;
       settings = {
         picker.enabled = true;
         lazygit.enabled = true;
-        notifier.enabled = true;
-        words.enabled = true;
-        input.enabled = true;
         bufdelete.enabled = true;
       };
     };
-
     treesitter = {
       enable = true;
       settings = {
@@ -390,46 +316,11 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
         ensure_installed = "all";
       };
     };
-
     lsp = {
       enable = true;
       servers = {
-        nixd = {
-          enable = true;
-          settings = {
-            nixpkgs = {
-              expr = "import <nixpkgs> { }";
-            };
-            formatting = {
-              command = [ "nixfmt" ];
-            };
-            options = {
-              nixos = {
-                expr = "(attributes (import <nixpkgs/nixos> { configuration = [ ]; })).options";
-              };
-            };
-          };
-        };
-        vtsls = {
-          enable = true;
-          settings = {
-            vtsls.autoUseWorkspaceTsdk = true;
-            typescript = {
-              suggest = {
-                completeFunctionCalls = true;
-                autoImports = true;
-              };
-              updateImportsOnFileMove = {
-                enabled = "always";
-              };
-            };
-            javascript = {
-              suggest = {
-                autoImports = true;
-              };
-            };
-          };
-        };
+        nixd.enable = true;
+        vtsls.enable = true;
       };
     };
   };
@@ -447,6 +338,7 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
   ];
 
   extraPackages = with pkgs; [
+    yazi
     typescript-language-server
     nixd
     nixfmt-rfc-style
@@ -456,5 +348,6 @@ inputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
 
   extraConfigLua = ''
     require("dooing").setup({})
+    require("yazi").setup({})
   '';
 }
