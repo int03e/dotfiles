@@ -31,7 +31,7 @@
 
     resumeDevice = "/dev/disk/by-uuid/2a88ba25-c2ba-48c0-988a-09009ea1efdd";
 
-    boot.loader.grub = {
+    loader.grub = {
       enable = true;
       device = "nodev";
       efiSupport = true;
