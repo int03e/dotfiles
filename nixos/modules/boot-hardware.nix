@@ -37,7 +37,6 @@
       efiSupport = true;
       useOSProber = true;
       gfxmodeEfi = "1024x768";
-      fontSize = 32;
     };
   };
 
