@@ -36,7 +36,12 @@
       device = "nodev";
       efiSupport = true;
       useOSProber = true;
-      gfxmodeEfi = "1024x768";
+
+      gfxmodeEfi = "1920x1080";
+
+      extraConfig = ''
+        gfxpayload=keep
+      '';
     };
   };
 
