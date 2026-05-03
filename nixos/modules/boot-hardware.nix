@@ -31,17 +31,17 @@
 
     resumeDevice = "/dev/disk/by-uuid/2a88ba25-c2ba-48c0-988a-09009ea1efdd";
 
-    loader.grub = {
+    boot.loader.grub = {
       enable = true;
       device = "nodev";
       efiSupport = true;
       useOSProber = true;
 
-      gfxmodeEfi = "1920x1080";
+      gfxmodeEfi = "auto";
 
-      extraConfig = ''
-        gfxpayload=keep
-      '';
+      font = "${pkgs.grub2}/share/grub/unicode.pf2";
+
+      fontSize = 32;
     };
   };
 
