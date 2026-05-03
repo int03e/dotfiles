@@ -41,7 +41,7 @@
 
       font = "${pkgs.grub2}/share/grub/unicode.pf2";
 
-      fontSize = 32;
+      fontSize = 64;
     };
   };
 
