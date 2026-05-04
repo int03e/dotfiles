@@ -31,7 +31,7 @@
       efiSupport = true;
       useOSProber = true;
       gfxmodeEfi = "2880x1800";
-      theme = pkgs.grub2-theme-vimix;
+      theme = pkgs.catppuccin-grub;
     };
   };
 
