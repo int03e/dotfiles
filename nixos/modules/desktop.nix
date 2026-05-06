@@ -4,11 +4,13 @@
   services = {
     xserver = {
       enable = true;
-    };
-
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
+      displayManager.gdm.enable = true;
+      displayManager.gdm.autoSuspend = false;
+      desktopManager.gnome.enable = true;
+      desktopManager.gnome.extraGSettingsOverrides = ''
+        [org/gnome/desktop/peripherals/touchpad]
+        natural-scroll=true
+      '';
     };
 
     libinput = {
