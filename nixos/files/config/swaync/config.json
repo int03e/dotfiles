@@ -1,0 +1,42 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-width": 380,
+  "widgets": [
+    "label",
+    "buttons-grid",
+    "mpris",
+    "volume",
+    "backlight",
+    "notifications"
+  ],
+  "widget-config": {
+    "label": {
+      "text": "Settings",
+      "margin": 10
+    },
+    "volume": {
+      "label": "󰕾"
+    },
+    "backlight": {
+      "label": "󰃟"
+    },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󰖩 WiFi",
+          "command": "nm-connection-editor"
+        },
+        {
+          "label": "󰂯 BT",
+          "command": "blueman-manager"
+        },
+        {
+          "label": "󰤄 Power",
+          "command": "wlogout"
+        }
+      ]
+    }
+  }
+}

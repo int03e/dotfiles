@@ -1,0 +1,179 @@
+# Noctalia v5 config — migrated from v4 settings.json
+# Only non-default values are set here. The GUI writes overrides to
+# ~/.local/state/noctalia/settings.toml which always takes precedence.
+
+# ---------------------------------------------------------------------------
+# Shell
+# ---------------------------------------------------------------------------
+
+[shell]
+avatar_path           = "~/.face"
+telemetry_enabled     = false
+
+[shell.animation]
+enabled = true
+speed   = 1.0  # matches v4 general.animationSpeed = 1
+
+[shell.shadow]
+direction = "down_right"  # v4: general.shadowDirection = "bottom_right"
+
+[shell.launcher]
+categories    = true   # v4: appLauncher.showCategories = true
+sort_by_usage = true   # v4: appLauncher.sortByMostUsed = true
+
+# ---------------------------------------------------------------------------
+# Theme (v4: colorSchemes)
+# ---------------------------------------------------------------------------
+
+[theme]
+mode    = "dark"        # v4: colorSchemes.darkMode = true
+source  = "builtin"
+builtin = "Catppuccin"  # v4: colorSchemes.predefinedScheme = "Catppuccin"
+
+# ---------------------------------------------------------------------------
+# Bar (v4: bar)
+# ---------------------------------------------------------------------------
+
+[bar.main]
+position           = "top"           # v4: bar.position = "top"
+background_opacity = 0.93            # v4: bar.backgroundOpacity = 0.93
+radius             = 12              # v4: bar.frameRadius = 12
+margin_ends        = 4               # v4: bar.marginHorizontal = 4 (approximation)
+margin_edge        = 4               # v4: bar.marginVertical = 4
+widget_spacing     = 6               # v4: bar.widgetSpacing = 6
+capsule            = true            # v4: bar.showCapsule = true
+capsule_opacity    = 1.0             # v4: bar.capsuleOpacity = 1
+
+start  = ["workspaces"]
+center = []
+end    = ["notifications", "tray", "battery", "volume", "keyboard_layout", "network", "bluetooth", "control-center", "clock", "session"]
+
+# ---------------------------------------------------------------------------
+# Bar widgets (v4: bar.widgets)
+# ---------------------------------------------------------------------------
+
+[widget.workspaces]
+display                   = "id"   # v4: labelMode = "index"
+labels_only_when_occupied = true   # v4: showLabelsOnlyWhenOccupied = true
+max_label_chars           = 2      # v4: characterCount = 2
+# pill_scale omitted — v4 pillSize = 0.7 was pill length, not thickness; v5 default (1.0) matches the original look
+focused_color = "primary"          # v4 "secondary" mapped to orange in Catppuccin; "primary" gives the correct blue/lavender
+empty_color   = "surface_variant"  # neutral, unobtrusive empty workspaces
+
+[widget.notifications]
+hide_when_no_unread = false  # v4: NotificationHistory.hideWhenZeroUnread = false
+
+[widget.tray]
+# v4: Tray.drawerEnabled = false (inline tray, not drawer)
+drawer = false
+
+[widget.battery]
+display_mode = "graphic"  # v4: Battery.displayMode = "graphic"
+device       = "auto"
+
+[widget.volume]
+# v4: Volume.displayMode = "alwaysShow", middleClickCommand = "pwvucontrol || pavucontrol"
+device = "output"
+
+[widget.keyboard_layout]
+show_icon   = true   # v4: KeyboardLayout.showIcon = true
+# v4: KeyboardLayout.displayMode = "forceOpen" has no direct v5 equivalent
+
+[widget.network]
+show_label = false  # v4: Network.displayMode = "onhover" → hide label by default
+
+[widget.bluetooth]
+show_label = false  # v4: Bluetooth.displayMode = "onhover" → hide label by default
+
+[widget.control-center]
+glyph = "noctalia"  # v4: ControlCenter.icon = "noctalia"
+
+[widget.clock]
+format         = "{:%H:%M} {:%a, %b %d}"  # v4: Clock.formatHorizontal = "HH:mm ddd, MMM dd"
+tooltip_format = "{:%H:%M} {:%a, %b %d}"  # v4: Clock.tooltipFormat
+
+[widget.session]
+# v4: SessionMenu.iconColor = "error" — no direct v5 per-icon colour on session widget
+# Use color role on the widget instead
+color = "error"
+
+# ---------------------------------------------------------------------------
+# Notifications (v4: notifications)
+# ---------------------------------------------------------------------------
+
+[notification]
+enable_daemon      = true
+position           = "top_right"   # v4: notifications.location = "top_right"
+background_opacity = 1.0           # v4: notifications.backgroundOpacity = 1
+
+# ---------------------------------------------------------------------------
+# OSD (v4: osd)
+# ---------------------------------------------------------------------------
+
+[osd]
+position           = "top_right"  # v4: osd.location = "top_right"
+background_opacity = 1.0          # v4: osd.backgroundOpacity = 1
+
+[osd.kinds]
+volume     = true  # v4: osd.enabledTypes included 0 (volume)
+brightness = true  # v4: osd.enabledTypes included 1 (brightness)
+# type 2 in v4 was keyboard layout
+keyboard_layout = true
+
+# ---------------------------------------------------------------------------
+# Wallpaper (v4: wallpaper)
+# ---------------------------------------------------------------------------
+
+[wallpaper]
+enabled    = true
+directory  = "/home/int03e/Pictures/wallpapers"  # v4: wallpaper.directory
+fill_mode  = "crop"                              # v4: wallpaper.fillMode = "crop"
+fill_color = "#000000"                           # v4: wallpaper.fillColor
+transition = ["fade", "disc", "stripes", "wipe", "honeycomb"]  # v4: wallpaper.transitionType (removed "pixelate", not in v5)
+transition_duration = 1500                       # v4: wallpaper.transitionDuration = 1500
+
+[wallpaper.automation]
+enabled          = false     # v4: wallpaper.automationEnabled = false
+interval_seconds = 300       # v4: wallpaper.randomIntervalSec = 300
+order            = "random"  # v4: wallpaper.wallpaperChangeMode = "random"
+
+# ---------------------------------------------------------------------------
+# Location (v4: location)
+# ---------------------------------------------------------------------------
+
+[location]
+auto_locate = false     # v4: location.autoLocate = false
+address     = "warsaw"  # v4: location.name = "warsaw"
+
+# ---------------------------------------------------------------------------
+# Night light (v4: nightLight)
+# ---------------------------------------------------------------------------
+# v4: nightLight.enabled = false — night light is off by default in v5 too,
+# no need to set it explicitly unless you want to enable it.
+
+# ---------------------------------------------------------------------------
+# Hooks (v4: hooks)
+# ---------------------------------------------------------------------------
+
+[hooks]
+# slack is launched by Hyprland exec-once with workspace placement
+
+# ---------------------------------------------------------------------------
+# Lock screen (v4: general lock screen settings)
+# ---------------------------------------------------------------------------
+
+[lockscreen]
+enabled = true
+# v4: general.lockOnSuspend = true — handled at compositor/logind level in v5
+
+# ---------------------------------------------------------------------------
+# Keybinds (v4: general.keybinds)
+# ---------------------------------------------------------------------------
+
+[keybinds]
+validate       = ["return", "kp_enter"]  # v4: keyEnter = ["Return", "Enter"]
+cancel         = ["escape"]              # v4: keyEscape = ["Esc"]
+left           = ["left"]               # v4: keyLeft
+right          = ["right"]              # v4: keyRight
+up             = ["up"]                 # v4: keyUp
+down           = ["down"]               # v4: keyDown

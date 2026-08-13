@@ -1,0 +1,180 @@
+/* =============================================================================
+ * GLOBAL BAR STYLING
+ * ============================================================================= */
+
+window#waybar {
+  background-color: rgba(17, 17, 27, 0.85); /* Dark translucent background */
+  border-bottom: 2px solid rgba(137, 180, 250, 0.3);
+  color: #cdd6f4;
+  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-size: 14px;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+/* Base style for all "pill" modules */
+#workspaces,
+#mode,
+#window,
+#clock,
+#pulseaudio,
+#network,
+#bluetooth,
+#language,
+#tray,
+#custom-power {
+  padding: 0 10px;
+  margin: 4px 3px;
+  border-radius: 8px;
+  background-color: #313244; /* Default dark grey for modules */
+  color: #cdd6f4;
+}
+
+/* =============================================================================
+ * LEFT SIDE: WORKSPACES
+ * ============================================================================= */
+
+#workspaces {
+  background-color: #313244;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  background-color: transparent;
+  color: #cdd6f4; /* Ensures numbers are visible */
+  border: none;
+  text-shadow: none;
+}
+
+#workspaces button.active {
+  color: #11111b; /* Dark text on bright background */
+  background-color: #94e2d5; /* Teal/Green highlight */
+  border-radius: 6px;
+  margin: 3px 0;
+}
+
+#workspaces button.urgent {
+  background-color: #f38ba8;
+  color: #11111b;
+}
+
+#workspaces button:hover {
+  background-color: rgba(137, 180, 250, 0.2);
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+
+/* =============================================================================
+ * CENTER: WINDOW NAME (Optional)
+ * ============================================================================= */
+
+#window {
+  background-color: transparent; /* Makes the center look cleaner */
+}
+
+/* =============================================================================
+ * RIGHT SIDE: SYSTEM MODULES
+ * ============================================================================= */
+
+/* Language Switcher */
+#language {
+  background: #b4befe;
+  color: #11111b;
+  padding: 0 10px;
+  border-radius: 8px; /* Changed from 10px to match others */
+  min-width: 40px;
+  margin: 4px 5px;
+}
+/* Sound/Volume */
+#pulseaudio {
+  background-color: #f9e2af; /* Yellow */
+  color: #11111b;
+}
+
+/* WiFi Network */
+#network {
+  background-color: #89b4fa; /* Blue */
+  color: #11111b;
+}
+
+/* Bluetooth */
+#bluetooth {
+  background-color: #b4befe; /* Lavender */
+  color: #11111b;
+  font-size: 16px;
+}
+
+#battery {
+  color: #ffffff;
+  padding: 0 10px;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: #26a65b; /* Green when charging */
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* Clock */
+#clock {
+  background-color: #45475a; /* Matching Grey */
+  color: #cdd6f4;
+  font-weight: bold;
+}
+
+/* Power Button - Perfectly Centered and Grey */
+#custom-power {
+  background-color: #45475a;
+  color: #cdd6f4;
+  font-size: 18px;
+
+  /* Reset padding to 0 so it doesn't push the icon */
+  padding: 0;
+  /* Use min-width to create the box shape */
+  min-width: 40px;
+  /* Symmetrical margins to center the box in the bar */
+  margin: 4px 5px;
+  /* Ensure the icon is centered inside the min-width */
+  border-radius: 10px;
+}
+/* System Tray */
+#tray {
+  background-color: #313244;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: #f38ba8;
+}
+
+/* Tooltip styling */
+tooltip {
+  background: #1e1e2e;
+  border: 1px solid #89b4fa;
+  border-radius: 10px;
+}
+tooltip label {
+  color: #cdd6f4;
+}

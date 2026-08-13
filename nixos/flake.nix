@@ -18,6 +18,11 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +32,7 @@
       nixvim,
       noctalia,
       nix-index-database,
+      home-manager,
       ...
     }@inputs:
     {
@@ -44,6 +50,13 @@
           nix-index-database.nixosModules.nix-index
           {
             programs.nix-index-database.comma.enable = true;
+          }
+
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.int03e = import ./modules/home.nix;
           }
         ];
       };

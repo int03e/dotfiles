@@ -1,0 +1,74 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["hyprland/language", "pulseaudio", "network", "bluetooth", "tray", "battery", "clock", "custom/power"],
+
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "US",
+        "format-ua": "UA",
+        "on-click": "hyprctl switchxkblayout at-translated-set-2-keyboard next"
+    },
+
+    "clock": {
+      "format": "{:%H:%M}",
+      "tooltip": true,
+      "tooltip-format": "{:%A, %B %d, %Y}"
+    },
+
+    "battery": {
+      "bat": "BAT0",
+      "states": {
+          "warning": 30,
+          "critical": 15
+      },
+      "format": "{icon} {capacity}%",
+      "format-charging": "󱐋 {capacity}%",
+      "format-plugged": " {capacity}%",
+      "format-alt": "{icon} {time}",
+      "format-icons": ["", "", "", "", ""]
+      },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted",
+        "on-click": "swaync-client -t -sw", // Opens the volume mixer
+        "format-icons": {
+            "default": ["", ""]
+        }
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "wlogout"
+    },
+
+    "bluetooth": {
+        "format": "",
+        "on-click": "swaync-client -t -sw" // Opens the side panel
+    },
+
+    "network": {
+      "interface": "wlp99s0", // You can force it to use this card
+      "format-wifi": "  {essid} ({signalStrength}%)", // This shows the WiFi name
+      "format-ethernet": "󰈀  {ipaddr}/{cidr}",
+      "format-disconnected": "󰖪  Disconnected",
+      "tooltip-format": "{ifname} via {gwaddr}",
+      "on-click": "swaync-client -t -sw" // Opens a WiFi selector when you click the bar
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+    "custom/notification": {
+      "tooltip": false,
+      "format": "󱅫",
+      "on-click": "swaync-client -t -sw",
+      "escape": true
+    }
+}

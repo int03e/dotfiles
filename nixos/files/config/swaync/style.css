@@ -1,0 +1,31 @@
+.control-center {
+    background: #1e1e2e; /* Dark background */
+    border-radius: 15px;
+    border: 1px solid #89b4fa;
+    color: #cdd6f4;
+    padding: 10px;
+}
+
+.widget-volume, .widget-backlight {
+    background: #313244;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+/* The buttons (Wifi, BT) */
+.widget-buttons-grid {
+    padding: 5px;
+    margin: 5px;
+}
+
+.widget-buttons-grid > box > button {
+    background: #313244;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 15px;
+}
+
+.widget-buttons-grid > box > button:hover {
+    background: #45475a;
+}

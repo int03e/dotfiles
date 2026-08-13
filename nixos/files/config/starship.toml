@@ -1,0 +1,66 @@
+# 1. THE LAYOUT
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nix_shell\
+$character"""
+
+right_format = """$time"""
+
+# 2. DIRECTORY (Sky)
+[directory]
+style = "bold #89dceb"
+format = "[$path]($style) "
+truncation_length = 3
+truncate_to_repo = true
+
+# 3. GIT BRANCH (Mauve/Purple)
+[git_branch]
+symbol = " "
+style = "bold #cba6f7"
+format = "on [$symbol$branch]($style) "
+
+# 4. GIT STATUS (Muted Catppuccin Palette)
+[git_status]
+# Symbols
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = "✓"
+untracked = "?"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+stashed = "󰟫"
+
+format = '([\[](#6c7086)[$ahead_behind$up_to_date](bold #94e2d5)[\]](#6c7086) )([\[](#6c7086)[$all_status](#b4befe)[\]](#6c7086) )'
+
+# 5. SILENT NIX SHELL (Blue - No "via")
+[nix_shell]
+symbol = "❄️"
+format = "[$symbol]($style) "
+style = "bold #89b4fa"
+
+# 6. TIME (Green - Catppuccin Green)
+[time]
+disabled = false
+time_format = "%T" 
+format = "[$time]($style) "
+style = "bold #a6e3a1"
+
+# 7. CHARACTER (Success: Green, Error: Red)
+[character]
+success_symbol = "[➜](bold #a6e3a1)"
+error_symbol = "[➜](bold #f38ba8)"
+
+# 8. DISABLE NOISY MODULES
+[nodejs]
+disabled = true
+[gcloud]
+disabled = true
+[package]
+disabled = true
+[python]
+disabled = true

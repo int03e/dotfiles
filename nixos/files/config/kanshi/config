@@ -1,0 +1,10 @@
+# Profile for when you are on the go (Internal screen only)
+profile {
+    output eDP-1 enable
+}
+
+# Profile for when the external monitor is plugged in
+profile {
+    output eDP-1 disable
+    output "HDMI-A-1" enable mode 1920x1080 position 0,0
+}

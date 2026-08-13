@@ -1,0 +1,4 @@
+[manager]
+keymap = [
+    { on = ["g", "m"], run = "cd -- /mnt/media/movies", desc = "Go to movies" }
+]
